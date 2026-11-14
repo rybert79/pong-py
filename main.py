@@ -1,4 +1,37 @@
+from http.server import HTTPServer, BaseHTTPRequestHandler
+import threading
 import pygame
+
+arah = "stop"
+
+def player2_control():
+    global arah
+    if arah == "up":
+        player2.y -= speed * dt
+    elif arah == "down":
+        player2.y += speed * dt
+
+
+class Handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        global arah
+        if self.path == "/up":
+            arah = "up"
+
+        elif self.path == "/down":
+            arah = "down"
+
+        elif self.path == "/stop":
+            arah = "stop"
+
+        else:
+            self.send_error(404)
+            return
+
+server = HTTPServer(("0.0.0.0", 8000), Handler)
+thread1 = threading.Thread(target=server.serve_forever)
+thread1.daemon = True
+thread1.start()
 
 pygame.init()
 
@@ -91,6 +124,7 @@ while running:
 
     if keys[pygame.K_d]:
         player2.y += speed * dt
+    player2_control()
 
     player1.clamp_ip(screen.get_rect())
     player2.clamp_ip(screen.get_rect())
@@ -100,4 +134,6 @@ while running:
 
     pygame.display.flip()
 
+server.shutdown()
+server.server_close()
 pygame.quit()
