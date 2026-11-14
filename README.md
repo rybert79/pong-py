@@ -31,13 +31,13 @@ This project is part of my journey learning game development with Pygame, object
 1. Clone this repository:
 
    ```bash
-   git clone https://github.com/rybert79/YOUR_REPOSITORY.git
+   git clone https://github.com/rybert79/pong-py.git
    ```
 
 2. Navigate to the project directory:
 
    ```bash
-   cd YOUR_REPOSITORY
+   cd pong-py
    ```
 
 3. Install Pygame:
